@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <h2>Dashboard</h2>
+    
+    <h3>Upload File</h3>
+    <form id="uploadForm" enctype="multipart/form-data">
+        <input type="file" id="file" name="file" accept=".pdf,.png,.jpeg,.jpg" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h3>Download File</h3>
+    <a href="/api/download/sample.pdf">Download Sample PDF</a>
+
+    <h3>Uploaded Files</h3>
+    <ul id="fileList"></ul>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert('File uploaded successfully!');
+                fetchFiles();
+            } else {
+                alert('File upload failed!');
+            }
+        });
+
+        async function fetchFiles() {
+            const response = await fetch('/api/files');
+            const files = await response.json();
+            const fileList = document.getElementById('fileList');
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const li = document.createElement('li');
+                const a = document.createElement('a');
+                a.href = `/api/download/${file.filename}`;
+                a.textContent = file.filename;
+                li.appendChild(a);
+                fileList.appendChild(li);
+            });
+        }
+
+        fetchFiles();
+    </script>
+</body>
+</html>
