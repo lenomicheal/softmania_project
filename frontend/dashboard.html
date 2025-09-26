@@ -1,31 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <style>
+        body {
+            height: 100vh;
+            padding: 10px;
+            background-image: linear-gradient(to left, #74ebd5, #ACB6E5);
+        }
+
+        .dashboard-container {
+
+            background: whitesmoke;
+            min-height: 30vh;
+            padding: 20px 50px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            margin-bottom: 10px;
+        }
+
+
+
+        button {
+            background-color: #4ca0af;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
+
 <body>
-    <h2>Dashboard</h2>
-    
-    <h3>Upload File</h3>
-    <form id="uploadForm" enctype="multipart/form-data">
-        <input type="file" id="file" name="file" accept=".pdf,.png,.jpeg,.jpg" required>
-        <button type="submit">Upload</button>
-    </form>
+    <div class="dashboard-container">
+        <h2>Dashboard</h2>
 
-    <h3>Download File</h3>
-    <a href="/api/download/sample.pdf">Download Sample PDF</a>
+        <h3>Upload File</h3>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="file" name="file" accept=".pdf,.png,.jpeg,.jpg" required>
+            <button type="submit">Upload</button>
+        </form>
 
-    <h3>Uploaded Files</h3>
-    <ul id="fileList"></ul>
+        <h3>Download File</h3>
+        <a href="/api/download/sample.pdf">Download Sample PDF</a>
+
+        <h3>Uploaded Files</h3>
+        <ul id="fileList"></ul>
+
+        <button type="submit"><a href="/login">Logout</a></button>
+    </div>
 
     <script>
-        document.getElementById('uploadForm').addEventListener('submit', async function(event) {
+        document.getElementById('uploadForm').addEventListener('submit', async function (event) {
             event.preventDefault();
-            
+
             const formData = new FormData(event.target);
-            
+
             const response = await fetch('/api/upload', {
                 method: 'POST',
                 body: formData
@@ -57,4 +94,5 @@
         fetchFiles();
     </script>
 </body>
+
 </html>
