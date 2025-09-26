@@ -40,7 +40,7 @@ def login_page():
 def dashboard_page():
     return send_from_directory(app.template_folder, 'dashboard.html')
 
-# API Routes
+
 @app.route('/api/signup', methods=['POST'])
 def signup():
     data = request.get_json()
@@ -112,7 +112,7 @@ def get_files():
 
 @app.route('/')
 def index():
-    return send_from_directory(app.template_folder, 'login.html')
+    return send_from_directory(app.template_folder, 'signup.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
