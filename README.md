@@ -1,4 +1,4 @@
-# Sigup and login Project
+# Signup and login Project
 
 This is a basic Fullstack project built with a Python Flask backend and HTML/CSS/JavaScript for frontend.
 
@@ -149,5 +149,6 @@ project-root/
 ├── mysql_schema.sql
 └── README.md
 ```
+
 
 
