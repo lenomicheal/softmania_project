@@ -2,11 +2,12 @@
 
 This is a full-stack web application with a Python Flask backend and a simple HTML/CSS/JavaScript frontend.
 
-## Requirements
+## Technologies Used
 
-- Python 3
-- pip
-- MySQL
+-   **Backend**: Python(Flask)
+-   **Frontend**: HTML, JavaScript,Css
+-   **Database**: MySQL(Railway hosting server)
+-   **Database Driver**: PyMySQL
 
 ## Setup Instructions
 
@@ -107,3 +108,4 @@ project-root/
 ├── mysql_schema.sql
 └── README.md
 ```
+
