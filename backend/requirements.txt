@@ -4,3 +4,4 @@ PyMySQL
 Flask-Bcrypt
 Flask-Login
 cryptography
+gunicorn
