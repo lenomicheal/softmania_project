@@ -1,6 +1,6 @@
-# Full-Stack Web Application
+# Sigup and login Project
 
-This is a full-stack web application with a Python Flask backend and a simple HTML/CSS/JavaScript frontend.
+This is a basic Fullstack project built with a Python Flask backend and HTML/CSS/JavaScript for frontend.
 
 ## Technologies Used
 
@@ -86,6 +86,47 @@ This is a full-stack web application with a Python Flask backend and a simple HT
 2.  **Access the frontend:**
     -   Open your web browser and go to `http://127.0.0.1:5000/signup`.
 
+### 4. Connecting to a Hosted Database (e.g., Railway)
+
+If you are deploying this application to a hosting platform like Railway, you will need to connect it to a hosted database. Here’s how to configure it:
+
+1.  **Create a MySQL Database on Your Hosting Platform:**
+    -   In your hosting provider's dashboard (e.g., Railway), create a new MySQL database service.
+
+2.  **Get the Database Connection URL:**
+    -   Your hosting provider will give you a database connection URL (often called `DATABASE_URL`). It will look something like this:
+        `mysql://<user>:<password>@<host>:<port>/<database>`
+
+3.  **Set the Environment Variable:**
+    -   In your hosting platform's settings for your application, create an environment variable named `DATABASE_URL` and paste the connection URL as its value.
+    -   The application is already configured to read this environment variable, so it will automatically connect to your hosted database when deployed.
+
+4.  **Update `config.py` for Production (Recommended):**
+    -   The `config.py` file is designed to use the `DATABASE_URL` from the environment. To make it more robust for platforms like Railway, you can ensure it correctly formats the URL for SQLAlchemy.
+
+    -   Modify your `backend/config.py` to look like this:
+        ```python
+        import os
+
+        class Config:
+            SECRET_KEY = os.environ.get('SECRET_KEY') or 'a-secret-key'
+            
+            # Get the database URL from the environment
+            DATABASE_URL = os.environ.get('DATABASE_URL')
+            
+            # If the URL is from a hosting provider, replace 'mysql://' with 'mysql+pymysql://'
+            if DATABASE_URL and DATABASE_URL.startswith("mysql://"):
+                DATABASE_URL = DATABASE_URL.replace("mysql://", "mysql+pymysql://", 1)
+            
+            # Set the SQLAlchemy database URI
+            SQLALCHEMY_DATABASE_URI = DATABASE_URL or 'mysql+pymysql://root:password@localhost/flask_app'
+            
+            SQLALCHEMY_TRACK_MODIFICATIONS = False
+            UPLOAD_FOLDER = 'uploads'
+            ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg'}
+        ```
+    -   This change ensures that your application will work seamlessly both locally and when deployed, without needing to change the code.
+
 ## Project Structure
 
 ```
@@ -108,4 +149,5 @@ project-root/
 ├── mysql_schema.sql
 └── README.md
 ```
+
 
